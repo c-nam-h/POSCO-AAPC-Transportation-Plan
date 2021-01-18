@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>MEN Practice</title>
+</head>
+<body>
+    <% if (errorValue) { %>
+        <h1>Upload Failed</h1>
+        <p>Please check your data in the Excel Upload file and try again.</p>
+        <p>Error value: <%= errorValue %></p>
+    <% } %>
+
+    <!-- <form action="/" enctype="multipart/form-data" method="post"> -->
+
+    <form method="get" action="/download/excel_upload_form.xlsx">
+        <button type="submit">Excel Upload Form</button>
+    </form>
+        
+    <div>Excel Upload:
+        <input type="file"  id="input" name="itemList" accept=".xlsx, .csv"/>
+    </div>
+
+    <table>
+        <tr>
+            <td>Importer/Consignee</td>
+            <td>System Code</td>
+        </tr>
+        <tr>
+            <td>POSCO INTERNATIONAL AMERICA</td>
+            <td>POSCO INTERNATIONAL AMERICA</td>
+        </tr>
+    </table>
+
+    <form action="/" method="post">
+        <div>
+            <label for="vessel">Vessel Watchlist</label>
+            <div>
+                <select name="vessel" id="vessel">
+                    <option value="<%= vessel[0]._id %>"><%= vessel[0].name %></option>
+                </select>
+            </div>
+        </div>
+        
+        <br>
+
+        <table id="tableau">
+            <tbody>
+                <tr>
+                    <td>Coil/Container #</td>
+                    <td>Origin</td>
+                    <td>Destination</td>
+                    <td>Transportation Type</td>
+                    <td>Item</td>
+                    <td>Spec</td>
+                    <td>Thickness(mm)</td>
+                    <td>Width(mm)</td>
+                    <td>Net Weight(KG)</td>
+                    <td>Gross Weight(KG)</td>
+                    <td>Delivery Date</td>
+                    <td>Importer/Consignee</td>
+                    <td>Customer</td>
+                    <td>Remark</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <button type="submit" id="submit" name="table" onclick="table_to_array('tableau')";>Submit</button>
+        
+    </form>
+    <button type="submit" id="validate">Validate</button>
+    
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js" integrity="sha512-wBcFatf7yQavHQWtf4ZEjvtVz4XkYISO96hzvejfh18tn3OrJ3sPBppH0B6q/1SHB4OKHaNNUKqOmsiTGlOM/g==" crossorigin="anonymous"></script>
+    <script>
+        function handleFile(e) {
+            let files = e.target.files, f = files[0];
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let data = new Uint8Array(e.target.result);
+                let workbook = XLSX.read(data, {type: 'array'});
+                let worksheet = workbook.Sheets["Excel Upload"];
+
+                if (!worksheet) {
+                    alert("Error: Please check the name of worksheet in your Excel Upload file and change it to 'Excel Upload' and try again.");
+                    location.reload();
+                }
+
+                let container = document.getElementById('tableau');
+                container.innerHTML = XLSX.utils.sheet_to_html(worksheet, {editable: true});
+            };
+            reader.readAsArrayBuffer(f);
+        }
+        
+        document.getElementById("input").addEventListener('change', handleFile, false);
+    </script>
+    <script>
+        var result = []
+
+        function table_to_array(table_id) {
+            data = document.getElementById(table_id).rows
+            data_list = []
+
+            for (let i = 1; i < data.length; i++) {
+                element = data[i].children
+                element_list = []
+
+                for (let j = 0; j < element.length; j++) {
+                    console.log(j, element[j].innerText, typeof element[j].innerText)
+                    element_list.push(element[j].innerText);
+                }
+                
+                data_list.push(element_list)
+            }
+
+            result = JSON.stringify(data_list);
+            console.log(result);
+            document.getElementById("submit").value = result;
+        }
+    </script>
+</body>
+</html>
