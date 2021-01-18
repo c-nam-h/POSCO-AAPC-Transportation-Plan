@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 app.use(express.static("public"))
 
 const XLSX = require("xlsx")
-const formidable = require('formidable')
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/my_database", {useNewUrlParser: true, useUnifiedTopology: true})
@@ -41,9 +40,20 @@ app.get("/", async (req, res) => {
 
 const PackingList = require("./models/PackingList");
 
+const packingList = new PackingList({
+    deliveryDate: "2/1/21"
+});
 
+console.log("Delivery date:", packingList.deliveryDate)
+console.log(packingList.deliveryDate instanceof Date);
 // console.log(packingList.validateSync().errors);
 
+
+// packingList.save(function (err) {
+//     if (err) {
+//         console.log(err)
+//     }
+// })
 
 
 
@@ -55,6 +65,7 @@ app.post("/", async (req, res) => {
     const vesselName = selectedVessel.name;
 
     console.log(vessel_id, vesselName)
+
 
 
     // validate whether input data has the correct data type
@@ -79,13 +90,6 @@ app.post("/", async (req, res) => {
 
         if ( isNaN( packingListArray[i][9] )) { // gross weight => Number
             console.log("gross weight value error")
-            res.redirect("/");
-            return
-        }
-        console.log("Delivery date:", packingListArray[i][10].deliveryDate)
-        console.log(packingListArray[i][10].deliveryDate instanceof Date);
-
-        if (packingListArray[i][10].deliveryDate instanceof Date === false) {
             res.redirect("/");
             return
         }
@@ -119,9 +123,57 @@ app.post("/", async (req, res) => {
             confirmPerson: "Daphne Glover"
         })
     }
-    console.log("successfully uploaded")
     res.redirect("/");
 })
+
+
+
+// app.post("/", (req, res, next) => {
+//     console.log(req.body);
+    
+//     const form = new formidable.IncomingForm();
+//     // console.log(form)
+//     form.parse(req, function(err, fields, files) {
+//         const f = files[Object.keys(files)[0]];
+//         const workbook = XLSX.readFile(f.path);
+
+//         /* DO SOMETHING WITH workbook HERE */
+//         const first_sheet = workbook.SheetNames[0];
+//         const worksheet = workbook.Sheets[first_sheet];
+
+//         const worksheetRange = XLSX.utils.decode_range(worksheet['!ref']);
+
+//         for (var R = worksheetRange.s.r; R <= worksheetRange.e.r; ++R) {
+//             for (var C = worksheetRange.s.c; C <= worksheetRange.e.c; ++C) {
+//                 let cell_address = {c:C, r:R};
+//                 /* if an A1-style address is needed, encode the address */
+//                 let cell_ref = XLSX.utils.encode_cell(cell_address);
+//                 let cell_row = cell_address.r;
+
+//                 const header = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1"];
+//                 if (header.includes(cell_ref)) {
+//                     continue;
+//                 }
+
+//                 if (cell_row === cell_address.r) {
+
+//                 }
+
+//                 console.log(cell_row)
+//                 console.log(cell_ref)
+//                 let desired_cell = worksheet[cell_ref]
+//                 let desired_value = (desired_cell ? desired_cell.w : undefined);
+//                 console.log(desired_value)
+//                 console.log()
+
+//             }
+//         }
+//     })
+    
+//     res.redirect("/");
+// })
+
+
 
 
 
