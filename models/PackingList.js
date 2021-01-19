@@ -36,18 +36,22 @@ const PackingListSchema = new Schema({
     },
     thickness: {
         type: Number,
+        min: [0, "Negative Thickness"],
         required: true
     },
     width: {
         type: Number,
+        min: [0, "Negative Width"],
         required: true
     },
     netWeightKg: {
         type: Number,
+        min: [0, "Negative Net Weight"],
         required: true
     },
     grossWeightKg: {
         type: Number,
+        min: [0, "Negative Gross Weight"],
         required: true
     },
     deliveryDate: {
