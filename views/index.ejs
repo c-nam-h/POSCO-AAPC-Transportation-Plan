@@ -17,6 +17,7 @@
 
     <form method="get" action="/download/excel_upload_form.xlsx">
         <button type="submit">Excel Upload Form</button>
+        <button type="button" onclick="refresh()";>Clear</button>
     </form>
         
     <div>Excel Upload:
@@ -123,6 +124,11 @@
             result = JSON.stringify(data_list);
             console.log(result);
             document.getElementById("submit").value = result;
+        }
+    </script>
+    <script>
+        function refresh() {
+            location.reload();
         }
     </script>
 </body>
