@@ -13,7 +13,6 @@
         <p>Error value: <%= errorValue %></p>
     <% } %>
 
-    <!-- <form action="/" enctype="multipart/form-data" method="post"> -->
 
     <form method="get" action="/download/excel_upload_form.xlsx">
         <button type="submit">Excel Upload Form</button>
@@ -21,7 +20,7 @@
     </form>
         
     <div>Excel Upload:
-        <input type="file"  id="input" name="itemList" accept=".xlsx, .csv"/>
+        <input type="file" id="input" name="itemList" accept=".xlsx, .csv"/>
     </div>
 
     <table>
@@ -40,8 +39,14 @@
             <label for="vessel">Vessel Watchlist</label>
             <div>
                 <select name="vessel" id="vessel">
-                    <option value="<%= vessel[0]._id %>"><%= vessel[0].name %></option>
+                    <option value="">Select a Vessel</option>
+                    <% for (var i = 0; i < vessel.length; i++) { %>
+                        <option value="<%= vessel[i]._id %>"><%= vessel[i].name %></option>
+                    <% } %>
                 </select>
+            </div>
+            <div>
+                <a href="/add-vessel">Add A Vessel</a>
             </div>
         </div>
         

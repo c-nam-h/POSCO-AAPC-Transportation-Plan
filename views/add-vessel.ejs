@@ -1,0 +1,16 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POSCO AAPC: Transportation Plan</title>
+</head>
+<body>
+    <h1>Please Enter a Vessel Name and Its ETA</h1>
+    <form action="/add-vessel" method="post">
+        <input type="text" name="vessel" placeholder="Vessel Name" required>
+        <input type="text" name="ETA" placeholder="ETA MM/DD/YYYY" required>
+        <button type="submit" onclick="return confirm('Do you want to add?')">Add</button>
+    </form>
+    
+</body>
+</html>

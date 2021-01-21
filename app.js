@@ -76,40 +76,40 @@ app.post("/", async (req, res) => {
 
 
     // validate whether input data has the correct data type
-    for (var i = 0; i < packingListArray.length; i++) {
-        let packingList = new PackingList ({
-            vessel_id,
-            vesselName,
-            coilContainerNo: packingListArray[i][0],
-            origin: packingListArray[i][1],
-            destination: packingListArray[i][2],
-            transportationType: packingListArray[i][3],
-            item: packingListArray[i][4],
-            specification: packingListArray[i][5],
-            thickness: packingListArray[i][6],
-            width: packingListArray[i][7],
-            netWeightKg: packingListArray[i][8],
-            grossWeightKg: packingListArray[i][9],
-            deliveryDate: packingListArray[i][10],
-            importerConsignee: packingListArray[i][11],
-            customer: packingListArray[i][12],
-            remark: packingListArray[i][13],
-            inputDate: "1/16/2021",
-            inputPerson: "Namhyun Cho",
-            confirmDate: "1/16/2021",
-            confirmPerson: "Daphne Glover"
-        });
+    // for (var i = 0; i < packingListArray.length; i++) {
+    //     let packingList = new PackingList ({
+    //         vessel_id,
+    //         vesselName,
+    //         coilContainerNo: packingListArray[i][0],
+    //         origin: packingListArray[i][1],
+    //         destination: packingListArray[i][2],
+    //         transportationType: packingListArray[i][3],
+    //         item: packingListArray[i][4],
+    //         specification: packingListArray[i][5],
+    //         thickness: packingListArray[i][6],
+    //         width: packingListArray[i][7],
+    //         netWeightKg: packingListArray[i][8],
+    //         grossWeightKg: packingListArray[i][9],
+    //         deliveryDate: packingListArray[i][10],
+    //         importerConsignee: packingListArray[i][11],
+    //         customer: packingListArray[i][12],
+    //         remark: packingListArray[i][13],
+    //         inputDate: "1/16/2021",
+    //         inputPerson: "Namhyun Cho",
+    //         confirmDate: "1/16/2021",
+    //         confirmPerson: "Daphne Glover"
+    //     });
 
-        let err = packingList.validateSync();
+    //     let err = packingList.validateSync();
 
-        if (err) {
-            assert.strictEqual(err.errors["thickness"].name, "CastError")
-            assert.strictEqual(err.errors["width"].name, "CastError")
-            assert.strictEqual(err.errors["netWeightKg"].name, "CastError")
-            assert.strictEqual(err.errors["grossWeightKg"].name, "CastError")
-            res.redirect("/");
-            return
-        }
+    //     if (err) {
+    //         assert.strictEqual(err.errors["thickness"].name, "CastError")
+    //         assert.strictEqual(err.errors["width"].name, "CastError")
+    //         assert.strictEqual(err.errors["netWeightKg"].name, "CastError")
+    //         assert.strictEqual(err.errors["grossWeightKg"].name, "CastError")
+    //         res.redirect("/");
+    //         return
+    //     }
 
 
 
@@ -136,7 +136,7 @@ app.post("/", async (req, res) => {
         //     res.redirect("/");
         //     return
         // }
-    }
+    // }
 
 
     for (var i = 0; i < packingListArray.length; i++) {
@@ -216,6 +216,25 @@ app.post("/", async (req, res) => {
 //     res.redirect("/");
 // })
 
+
+app.get("/add-vessel", async (req, res) => {
+    const vessel = await Vessel.find({});
+    res.render("add-vessel", {
+        vessel
+    });
+});
+
+app.post("/add-vessel", async (req, res) => {
+    const vessel = req.body.vessel;
+    const ETA = req.body.ETA;
+
+    await Vessel.create({
+        name: vessel,
+        ETA
+    });
+
+    res.redirect("/");
+});
 
 
 
