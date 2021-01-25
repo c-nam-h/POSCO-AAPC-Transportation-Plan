@@ -7,8 +7,10 @@
 <body>
     <h1>Please Enter a Vessel Name and Its ETA</h1>
     <form action="/add-vessel" method="post">
-        <input type="text" name="vessel" placeholder="Vessel Name" required>
-        <input type="text" name="ETA" placeholder="ETA MM/DD/YYYY" required>
+        <label for="vessel_input">Vessel Name</label>
+        <input type="text" id="vessel_input" name="vessel" placeholder="Vessel Name" required>
+        <label for="ETA_input">ETA</label>
+        <input type="date" id="ETA_input" name="ETA" required>
         <button type="submit" onclick="return confirm('Do you want to add?')">Add</button>
     </form>
     

@@ -226,7 +226,9 @@ app.get("/add-vessel", async (req, res) => {
 
 app.post("/add-vessel", async (req, res) => {
     const vessel = req.body.vessel;
-    const ETA = req.body.ETA;
+    const d = req.body.ETA;
+    const ETA = new Date(d.replace(/-/g, '\/').replace(/T.+/, ''));
+    console.log(ETA)
 
     await Vessel.create({
         name: vessel,
