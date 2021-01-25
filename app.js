@@ -217,9 +217,9 @@ app.post("/", async (req, res) => {
 // })
 
 
-app.get("/add-vessel", async (req, res) => {
+app.get("/manage-vessel-watchlist", async (req, res) => {
     const vessel = await Vessel.find({});
-    res.render("add-vessel", {
+    res.render("manage-vessel-watchlist", {
         vessel
     });
 });
@@ -238,7 +238,38 @@ app.post("/add-vessel", async (req, res) => {
     res.redirect("/");
 });
 
+app.get("/update-vessel/:_id", async (req, res) => {
+    const vessel = await Vessel.findOne({_id: req.params._id});
+    const year = vessel.ETA.getFullYear();
+    let m = vessel.ETA.getMonth();
+    const d = vessel.ETA.getDate();
 
+    console.log("m", m)
+
+    let month = ""
+    if (m < 10) {
+        m += 1
+        month = "0" + m;
+    } else {
+        month = m + 1;
+    }
+    console.log(month);
+
+    let date = ""
+    if (d < 10) {
+        date = "0" + d;
+    } else {
+        date = d;
+    }
+    console.log(d);
+
+    const ETA = year + "-" + month + "-" + date;
+    console.log(ETA);
+    res.render("update-vessel", {
+        vessel,
+        ETA
+    });
+});
 
 
 app.listen(3000, () => {

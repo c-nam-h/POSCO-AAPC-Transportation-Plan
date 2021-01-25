@@ -5,7 +5,7 @@
     <title>POSCO AAPC: Transportation Plan</title>
 </head>
 <body>
-    <h1>Please Enter a Vessel Name and Its ETA</h1>
+    <h1>Add: Please Enter a Vessel Name and Its ETA</h1>
     <form action="/add-vessel" method="post">
         <label for="vessel_input">Vessel Name</label>
         <input type="text" id="vessel_input" name="vessel" placeholder="Vessel Name" required>
@@ -13,6 +13,16 @@
         <input type="date" id="ETA_input" name="ETA" required>
         <button type="submit" onclick="return confirm('Do you want to add?')">Add</button>
     </form>
+
+    <h1>Manage Vessel</h1>
+    <% for (var i = 0; i < vessel.length; i++) { %>
+        <div>
+            <a href="/update-vessel/<%= vessel[i]._id %>">Vessel: <%= vessel[i].name %>, ETA: <%= vessel[i].ETA.toDateString() %></a>
+        </div>
+    <% } %>
+
+
+
     
 </body>
 </html>

@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POSCO AAPC: Transportation Plan</title>
+</head>
+<body>
+    <h1>Update Vessel</h1>
+
+    <form action="/update-vessel" method="post">
+        <label for="vessel_input">Vessel Name: </label>
+        <input id="vessel_input" type="text" name="vessel" value="<%= vessel.name %>">
+        <label for="ETA">ETA: </label>
+        <input id="ETA_input" type="date" name="ETA" value="<%= ETA %>">
+    </form>
+
+    <button type="submit">Submit</button>
+
+
+
+
+    
+</body>
+</html>
