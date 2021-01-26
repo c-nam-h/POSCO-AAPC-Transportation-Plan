@@ -7,14 +7,15 @@
 <body>
     <h1>Update Vessel</h1>
 
-    <form action="/update-vessel" method="post">
+    <form action="/update-vessel/<%= vessel._id %>" method="post">
         <label for="vessel_input">Vessel Name: </label>
-        <input id="vessel_input" type="text" name="vessel" value="<%= vessel.name %>">
+        <input id="vessel_input" type="text" name="vessel" value="<%= vessel.name %>" required>
         <label for="ETA">ETA: </label>
-        <input id="ETA_input" type="date" name="ETA" value="<%= ETA %>">
+        <input id="ETA_input" type="date" name="ETA" value="<%= ETA %>" min="2009-01-01" max="2999-12-31" required>
+        <button type="submit" onclick="return confirm('Do you want to update the vessel information?')">Submit</button>
     </form>
 
-    <button type="submit">Submit</button>
+    
 
 
 

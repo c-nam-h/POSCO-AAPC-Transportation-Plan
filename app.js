@@ -13,7 +13,7 @@ const XLSX = require("xlsx")
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/my_database", {useNewUrlParser: true, useUnifiedTopology: true})
-
+mongoose.set('useFindAndModify', false);
 
 
 
@@ -270,6 +270,22 @@ app.get("/update-vessel/:_id", async (req, res) => {
         ETA
     });
 });
+
+app.post("/update-vessel/:_id", async (req, res) => {
+    const vessel_id = req.params._id;
+    const vessel = req.body.vessel;
+    const d = req.body.ETA;
+    const ETA = new Date(d.replace(/-/g, '\/').replace(/T.+/, ''));
+
+    console.log(vessel_id);
+
+    await Vessel.findByIdAndUpdate(vessel_id, {
+        name: vessel,
+        ETA
+    })
+
+    res.redirect("/manage-vessel-watchlist")
+})
 
 
 app.listen(3000, () => {
