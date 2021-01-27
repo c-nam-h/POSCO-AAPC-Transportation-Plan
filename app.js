@@ -170,53 +170,6 @@ app.post("/", async (req, res) => {
 })
 
 
-
-// app.post("/", (req, res, next) => {
-//     console.log(req.body);
-    
-//     const form = new formidable.IncomingForm();
-//     // console.log(form)
-//     form.parse(req, function(err, fields, files) {
-//         const f = files[Object.keys(files)[0]];
-//         const workbook = XLSX.readFile(f.path);
-
-//         /* DO SOMETHING WITH workbook HERE */
-//         const first_sheet = workbook.SheetNames[0];
-//         const worksheet = workbook.Sheets[first_sheet];
-
-//         const worksheetRange = XLSX.utils.decode_range(worksheet['!ref']);
-
-//         for (var R = worksheetRange.s.r; R <= worksheetRange.e.r; ++R) {
-//             for (var C = worksheetRange.s.c; C <= worksheetRange.e.c; ++C) {
-//                 let cell_address = {c:C, r:R};
-//                 /* if an A1-style address is needed, encode the address */
-//                 let cell_ref = XLSX.utils.encode_cell(cell_address);
-//                 let cell_row = cell_address.r;
-
-//                 const header = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1"];
-//                 if (header.includes(cell_ref)) {
-//                     continue;
-//                 }
-
-//                 if (cell_row === cell_address.r) {
-
-//                 }
-
-//                 console.log(cell_row)
-//                 console.log(cell_ref)
-//                 let desired_cell = worksheet[cell_ref]
-//                 let desired_value = (desired_cell ? desired_cell.w : undefined);
-//                 console.log(desired_value)
-//                 console.log()
-
-//             }
-//         }
-//     })
-    
-//     res.redirect("/");
-// })
-
-
 app.get("/manage-vessel-watchlist", async (req, res) => {
     const vessel = await Vessel.find({});
     res.render("manage-vessel-watchlist", {
