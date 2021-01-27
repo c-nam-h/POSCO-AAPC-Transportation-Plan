@@ -235,7 +235,7 @@ app.post("/add-vessel", async (req, res) => {
         ETA
     });
 
-    res.redirect("/");
+    res.redirect("/manage-vessel-watchlist");
 });
 
 app.get("/update-vessel/:_id", async (req, res) => {
