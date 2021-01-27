@@ -20,19 +20,17 @@ mongoose.set('useFindAndModify', false);
 
 
 const Vessel = require("./models/Vessel");
-// Vessel.create({
-//     name: "Mandarin",
-//     ETA: "2021-1-3",
-//     actualArrivalDate: "2021-1-4"
-// })
+
+require("./public/js/helpers")();
 
 
 
 app.get("/", async (req, res) => {
     const vessel = await Vessel.find({});
+
     res.render("index", {
-    vessel,
-    errorValue: null
+        vessel: vessel.sort(compare_date),
+        errorValue: null
     });
 })
 
