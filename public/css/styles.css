@@ -7,3 +7,13 @@ tr:nth-child(1) {
     font-weight: bold;
     background-color: ghostwhite;
 }
+
+.delete_vessel_btn {
+    background-color: cornflowerblue;
+    padding: 2px;
+    text-align: center;
+    border-radius: 2px;
+    color: white;
+    line-height: 25px;
+    text-decoration: none;
+}

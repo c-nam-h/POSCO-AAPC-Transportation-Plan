@@ -287,6 +287,12 @@ app.post("/update-vessel/:_id", async (req, res) => {
     res.redirect("/manage-vessel-watchlist")
 })
 
+app.get("/delete-vessel/:_id", async (req, res) => {
+    await Vessel.findByIdAndDelete(req.params._id);
+    console.log("Successfully deleted");
+    res.redirect("/manage-vessel-watchlist")
+})
+
 
 app.listen(3000, () => {
     console.log("App listening on port 3000")
