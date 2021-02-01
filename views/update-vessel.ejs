@@ -11,7 +11,11 @@
         <label for="vessel_input">Vessel Name: </label>
         <input id="vessel_input" type="text" name="vessel" value="<%= vessel.name %>" required>
         <label for="ETA">ETA: </label>
-        <input id="ETA_input" type="date" name="ETA" value="<%= ETA %>" min="2009-01-01" max="2999-12-31" required>
+        <input id="ETA_input" type="date" name="ETA" value="<%= schedule[0] %>" min="2009-01-01" max="2999-12-31" required>
+        <label for="ETA">Actual Arrival Date: </label>
+        <input id="AAD_input" type="date" name="actualArrivalDate" value="<%= schedule[1] %>" min="2009-01-01" max="2999-12-31">
+        <label for="ETA">LFD: </label>
+        <input id="LFD_input" type="date" name="LFD" value="<%= schedule[2] %>" min="2009-01-01" max="2999-12-31">
         <button type="submit" onclick="return confirm('Do you want to update the vessel information?')">Submit</button>
     </form>
 

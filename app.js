@@ -191,34 +191,24 @@ app.post("/add-vessel", async (req, res) => {
 
 app.get("/update-vessel/:_id", async (req, res) => {
     const vessel = await Vessel.findOne({_id: req.params._id});
-    const year = vessel.ETA.getFullYear();
-    let m = vessel.ETA.getMonth();
-    const d = vessel.ETA.getDate();
+    const schedule = [];
 
-    console.log("m", m)
+    const ETA = new Date(vessel.ETA).yyyymmdd();
+    schedule.push(ETA);
 
-    let month = ""
-    if (m < 10) {
-        m += 1
-        month = "0" + m;
-    } else {
-        month = m + 1;
-    }
-    console.log(month);
+    if (vessel.actualArrivalDate) {
+        const actualArrivalDate = vessel.actualArrivalDate;
+        schedule.push(actualArrivalDate);
+    };
 
-    let date = ""
-    if (d < 10) {
-        date = "0" + d;
-    } else {
-        date = d;
-    }
-    console.log(d);
+    if (vessel.LFD) {
+        const LFD = vessel.LFD;
+        schedule.push(actualArrivalDate);
+    };
 
-    const ETA = year + "-" + month + "-" + date;
-    console.log(ETA);
     res.render("update-vessel", {
         vessel,
-        ETA
+        schedule
     });
 });
 
