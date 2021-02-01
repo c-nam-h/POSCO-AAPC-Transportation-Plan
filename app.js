@@ -197,13 +197,13 @@ app.get("/update-vessel/:_id", async (req, res) => {
     schedule.push(ETA);
 
     if (vessel.actualArrivalDate) {
-        const actualArrivalDate = vessel.actualArrivalDate;
+        const actualArrivalDate = new Date(vessel.actualArrivalDate).yyyymmdd();
         schedule.push(actualArrivalDate);
     };
 
     if (vessel.LFD) {
-        const LFD = vessel.LFD;
-        schedule.push(actualArrivalDate);
+        const LFD = new Date(vessel.LFD).yyyymmdd();
+        schedule.push(LFD);
     };
 
     res.render("update-vessel", {
@@ -215,14 +215,28 @@ app.get("/update-vessel/:_id", async (req, res) => {
 app.post("/update-vessel/:_id", async (req, res) => {
     const vessel_id = req.params._id;
     const vessel = req.body.vessel;
-    const d = req.body.ETA;
-    const ETA = new Date(d.replace(/-/g, '\/').replace(/T.+/, ''));
+    const ETA = new Date(req.body.ETA.replace(/-/g, '\/').replace(/T.+/, ''));
+    
+    console.log(req.body);
 
-    console.log(vessel_id);
+    let actualArrivalDate = ""
+
+    if (req.body.actualArrivalDate) {
+        actualArrivalDate = new Date(req.body.actualArrivalDate.replace(/-/g, '\/').replace(/T.+/, ''));
+    }
+    console.log(actualArrivalDate)
+
+    let LFD = ""
+    if (req.body.LFD) {
+        LFD = new Date(req.body.LFD.replace(/-/g, '\/').replace(/T.+/, ''));
+    }
+    console.log(LFD)
 
     await Vessel.findByIdAndUpdate(vessel_id, {
         name: vessel,
-        ETA
+        ETA,
+        actualArrivalDate,
+        LFD
     })
 
     res.redirect("/manage-vessel-watchlist")

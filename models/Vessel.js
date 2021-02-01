@@ -4,8 +4,12 @@ const Schema = mongoose.Schema;
 const VesselSchema = new Schema({
     name: String,
     ETA: Date,
-    actualArrivalDate: Date,
-    LFD: Date
+    actualArrivalDate: {
+        type: Date
+    },
+    LFD: {
+        type: Date
+    }
 });
 
 const Vessel = mongoose.model("Vessel", VesselSchema);
