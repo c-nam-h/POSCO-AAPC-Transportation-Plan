@@ -75,13 +75,7 @@
 
         <br>
         <button type="submit" id="submit" name="table" onclick="table_to_array('tableau')";>Submit</button>
-        
     </form>
-    <button type="submit" id="validate">Validate</button>
-    
-
-
-
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js" integrity="sha512-wBcFatf7yQavHQWtf4ZEjvtVz4XkYISO96hzvejfh18tn3OrJ3sPBppH0B6q/1SHB4OKHaNNUKqOmsiTGlOM/g==" crossorigin="anonymous"></script>
@@ -93,6 +87,33 @@
                 let data = new Uint8Array(e.target.result);
                 let workbook = XLSX.read(data, {type: 'array'});
                 let worksheet = workbook.Sheets["Excel Upload"];
+
+                const header = {
+                    A1: "Coil/Container #",
+                    B1: "Origin",
+                    C1: "Destination",
+                    D1: "Transportation Type",
+                    E1: "Item",
+                    F1: "Spec",
+                    G1: "Thickness (mm)",
+                    H1: "Width (mm)",
+                    I1: "Net Weight (KG)",
+                    J1: "Gross Weight (KG)",
+                    K1: "Delivery Date",
+                    L1: "Importer / Consignee",
+                    M1: "Customer",
+                    N1: "Remark"
+                };
+
+                if (worksheet["A1"].v !== header.A1 || worksheet["B1"].v !== header.B1 || worksheet["C1"].v !== header.C1 ||
+                worksheet["D1"].v !== header.D1 || worksheet["E1"].v !== header.E1 || worksheet["F1"].v !== header.F1 ||
+                worksheet["G1"].v !== header.G1 || worksheet["H1"].v !== header.H1 || worksheet["I1"].v !== header.I1 ||
+                worksheet["J1"].v !== header.J1 || worksheet["K1"].v !== header.K1 || worksheet["L1"].v !== header.L1 ||
+                worksheet["M1"].v !== header.M1 || worksheet["N1"].v !== header.N1) {
+                    alert("Error: Please check the column heads in your Excel Upload file and try again.");
+                    location.reload();
+                }
+
 
                 if (!worksheet) {
                     alert("Error: Please check the name of worksheet in your Excel Upload file and change it to 'Excel Upload' and try again.");
