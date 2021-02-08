@@ -9,8 +9,8 @@
 <body>
     <% if (errorValue) { %>
         <h1>Upload Failed</h1>
+        <p>Error: <%= errorValue %></p>
         <p>Please check your data in the Excel Upload file and try again.</p>
-        <p>Error value: <%= errorValue %></p>
     <% } %>
 
 
@@ -38,7 +38,7 @@
         <div>
             <label for="vessel">Vessel Watchlist</label>
             <div>
-                <select name="vessel" id="vessel">
+                <select name="vessel" id="vessel" required>
                     <option value="">Select a Vessel</option>
                     <% for (var i = 0; i < vessel.length; i++) { %>
                         <option value="<%= vessel[i]._id %>"><%= vessel[i].name %>, <%= vessel[i].ETA.toDateString() %> (ETA)</option>
