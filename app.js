@@ -39,22 +39,6 @@ app.get("/", async (req, res) => {
 const PackingList = require("./models/PackingList");
 const assert = require("assert");
 
-// const packingList = new PackingList({
-//     grossWeightKg: "sldkjfslk"
-// });
-
-// const err = packingList.validateSync();
-// console.log(err.errors["grossWeightKg"].name);
-
-// const packingList = new PackingList({
-//     deliveryDate: "2/1/21"
-// });
-
-// console.log("Delivery date:", packingList.deliveryDate)
-// console.log(packingList.deliveryDate instanceof Date);
-// console.log(packingList.validateSync().errors);
-
-
 
 app.post("/", async (req, res) => {
     const packingListArray = JSON.parse(req.body.table);
@@ -91,17 +75,19 @@ app.post("/", async (req, res) => {
             confirmPerson: "Daphne Glover"
         });
 
-        // let err = packingList.validateSync();
 
-        // if (err) {
-        //     assert.strictEqual(err.errors["thickness"].name, "CastError")
-        //     assert.strictEqual(err.errors["width"].name, "CastError")
-        //     assert.strictEqual(err.errors["netWeightKg"].name, "CastError")
-        //     assert.strictEqual(err.errors["grossWeightKg"].name, "CastError")
-        //     res.redirect("/");
-        //     return
-        // }
+        console.log("Delivery date:", packingList.deliveryDate) // date validator => Date
+        const deliveryDateValidator = packingList.deliveryDate instanceof Date;
+        if (!deliveryDateValidator) {
+            const errorMsg = "Delivery Date is not a date."
+            res.render("index", {
+                vessel: vessel.sort(compare_date),
+                errorValue: errorMsg
+            });
 
+            return
+        }
+        
 
         if ( isNaN( packingListArray[i][6] )) { // thickness validator => Number
             const errorMsg = "Thickness is not a number."
@@ -142,44 +128,13 @@ app.post("/", async (req, res) => {
 
             return
         }
-        
+
         packingList.save(function (err) {
             if (err) {
                 console.log(err)
             }
         })
     }
-
-    
-
-
-    // for (var i = 0; i < packingListArray.length; i++) {
-
-    //     console.log(typeof packingListArray[i][6])
-
-    //     await PackingList.create({
-    //         vessel_id,
-    //         vesselName,
-    //         coilContainerNo: packingListArray[i][0],
-    //         origin: packingListArray[i][1],
-    //         destination: packingListArray[i][2],
-    //         transportationType: packingListArray[i][3],
-    //         item: packingListArray[i][4],
-    //         specification: packingListArray[i][5],
-    //         thickness: packingListArray[i][6],
-    //         width: packingListArray[i][7],
-    //         netWeightKg: packingListArray[i][8],
-    //         grossWeightKg: packingListArray[i][9],
-    //         deliveryDate: packingListArray[i][10],
-    //         importerConsignee: packingListArray[i][11],
-    //         customer: packingListArray[i][12],
-    //         remark: packingListArray[i][13],
-    //         inputDate: "1/16/2021",
-    //         inputPerson: "Namhyun Cho",
-    //         confirmDate: "1/16/2021",
-    //         confirmPerson: "Daphne Glover"
-    //     })
-    // }
 
     res.redirect("/");
 })
