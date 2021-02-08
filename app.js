@@ -41,8 +41,20 @@ const assert = require("assert");
 
 
 app.post("/", async (req, res) => {
-    const packingListArray = JSON.parse(req.body.table);
     const vessel = await Vessel.find({});
+
+    const packingListArray = JSON.parse(req.body.table);
+    if (packingListArray.length === 0) {
+        const errorMsg = "An Excel Upload file is missing."
+
+        res.render("index", {
+            vessel: vessel.sort(compare_date),
+            errorValue: errorMsg
+        });
+        
+        return
+    }
+    
     const vessel_id = req.body.vessel;
     const selectedVessel = await Vessel.findById(vessel_id);
     const vesselName = selectedVessel.name;
