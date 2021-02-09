@@ -9,10 +9,15 @@
 </head>
 <body>
     <% if (errorValue) { %>
-        <h1>Upload Failed</h1>
-        <p>Error: <%= errorValue %></p>
-        <p>Please check your data in the Excel Upload file and try again.</p>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Excel Upload Error:</strong> <%= errorValue %> Please Try Again.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     <% } %>
+
+    
 
 
     <form method="get" action="/download/excel_upload_form.xlsx">
@@ -79,13 +84,13 @@
     </form>
 
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js" integrity="sha512-wBcFatf7yQavHQWtf4ZEjvtVz4XkYISO96hzvejfh18tn3OrJ3sPBppH0B6q/1SHB4OKHaNNUKqOmsiTGlOM/g==" crossorigin="anonymous"></script>
     <script>
         function handleFile(e) {
             let files = e.target.files, f = files[0];
-            if (!f) {
-                alert("No file uploaded")
-            }
+            
             let reader = new FileReader();
             reader.onload = function(e) {
                 let data = new Uint8Array(e.target.result);
