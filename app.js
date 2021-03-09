@@ -84,7 +84,7 @@ app.post("/", async (req, res) => {
             inputDate: "1/16/2021",
             inputPerson: "Namhyun Cho",
             confirmDate: "1/16/2021",
-            confirmPerson: "Daphne Glover"
+            confirmPersonName: "Daphne Glover"
         });
 
 
